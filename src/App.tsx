@@ -194,7 +194,7 @@ export default function App() {
       />
 
       {/* Fixed Header Controls Region (KPI Cards, Timeline Slider, Filter Toolbar) */}
-      <div className="bg-slate-950 border-b border-slate-800/80 px-4 py-2 space-y-2 shrink-0 z-20 shadow-md">
+      <div className="bg-slate-950 border-b border-slate-800/80 px-3 py-1.5 space-y-1.5 shrink-0 z-20 shadow-md">
         {/* Top KPI Cards Row */}
         <KPICards 
           tasks={displayedTasks} 

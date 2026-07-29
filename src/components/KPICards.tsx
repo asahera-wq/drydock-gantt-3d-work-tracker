@@ -59,210 +59,163 @@ export const KPICards: React.FC<KPICardsProps> = ({ tasks, onSelectDiscipline })
   }, [tasks]);
 
   return (
-    <div className="space-y-3 font-sans">
-      {/* 5 Core Metrics Row */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+    <div className="space-y-1.5 font-sans">
+      {/* 5 Core Metrics Row - Ultra Compact */}
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5">
         {/* KPI 1: Total Tasks */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm hover:border-slate-700 transition-all group">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                Total Tasks
+        <div className="bg-slate-900/90 border border-slate-800/90 rounded-lg p-2 shadow-sm hover:border-slate-700 transition-all flex items-center justify-between">
+          <div>
+            <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+              Total Tasks
+            </span>
+            <div className="flex items-baseline gap-1.5 mt-0.5">
+              <span className="text-lg font-black font-mono text-white tracking-tight">
+                {total}
               </span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-2xl font-black font-mono text-white tracking-tight">
-                  {total}
-                </span>
-                <span className="text-[10px] font-mono font-bold text-slate-400 bg-slate-950 border border-slate-800 px-1.5 py-0.5 rounded">
-                  Database Total
-                </span>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-lg bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
-              <ListChecks className="w-4 h-4" />
+              <span className="text-[9px] font-mono text-cyan-400 bg-cyan-950/60 border border-cyan-800/40 px-1 py-0.2 rounded">
+                100%
+              </span>
             </div>
           </div>
-          <div className="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-            <span>{notStarted} Not Started</span>
-            <span className="text-cyan-400 font-bold">100% Scope</span>
+          <div className="w-6 h-6 rounded bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 flex items-center justify-center shrink-0">
+            <ListChecks className="w-3.5 h-3.5" />
           </div>
         </div>
 
         {/* KPI 2: Completed Tasks */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm hover:border-slate-700 transition-all group">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                Completed Tasks
+        <div className="bg-slate-900/90 border border-slate-800/90 rounded-lg p-2 shadow-sm hover:border-slate-700 transition-all flex items-center justify-between">
+          <div>
+            <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+              Completed
+            </span>
+            <div className="flex items-baseline gap-1.5 mt-0.5">
+              <span className="text-lg font-black font-mono text-emerald-400 tracking-tight">
+                {completed}
               </span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-2xl font-black font-mono text-emerald-400 tracking-tight">
-                  {completed}
-                </span>
-                <span className="text-[10px] font-mono font-bold text-emerald-400 bg-emerald-950/80 border border-emerald-800/50 px-1.5 py-0.5 rounded">
-                  {total > 0 ? Math.round((completed / total) * 100) : 0}%
-                </span>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
-              <CheckCircle2 className="w-4 h-4" />
+              <span className="text-[9px] font-mono text-emerald-400 bg-emerald-950/60 border border-emerald-800/40 px-1 py-0.2 rounded font-bold">
+                {total > 0 ? Math.round((completed / total) * 100) : 0}%
+              </span>
             </div>
           </div>
-          <div className="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-            <span>Signed Off</span>
-            <span className="text-emerald-400 font-bold">{completed} / {total} Done</span>
+          <div className="w-6 h-6 rounded bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+            <CheckCircle2 className="w-3.5 h-3.5" />
           </div>
         </div>
 
         {/* KPI 3: Remaining Tasks */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm hover:border-slate-700 transition-all group">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                Remaining Tasks
+        <div className="bg-slate-900/90 border border-slate-800/90 rounded-lg p-2 shadow-sm hover:border-slate-700 transition-all flex items-center justify-between">
+          <div>
+            <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+              Remaining
+            </span>
+            <div className="flex items-baseline gap-1.5 mt-0.5">
+              <span className="text-lg font-black font-mono text-amber-400 tracking-tight">
+                {remaining}
               </span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-2xl font-black font-mono text-amber-400 tracking-tight">
-                  {remaining}
-                </span>
-                <span className="text-[10px] font-mono font-bold text-amber-400 bg-amber-950/80 border border-amber-800/50 px-1.5 py-0.5 rounded">
-                  {inProgress} Active
-                </span>
-              </div>
-            </div>
-            <div className="w-8 h-8 rounded-lg bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
-              <Clock className="w-4 h-4" />
+              <span className="text-[9px] font-mono text-amber-400 bg-amber-950/60 border border-amber-800/40 px-1 py-0.2 rounded">
+                {inProgress} Active
+              </span>
             </div>
           </div>
-          <div className="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-            <span>In Pipeline</span>
-            <span className="text-amber-400 font-bold">{total > 0 ? Math.round((remaining / total) * 100) : 0}% Left</span>
+          <div className="w-6 h-6 rounded bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center shrink-0">
+            <Clock className="w-3.5 h-3.5" />
           </div>
         </div>
 
         {/* KPI 4: Delayed Tasks */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm hover:border-slate-700 transition-all group">
-          <div className="flex items-start justify-between">
-            <div>
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
-                Delayed Tasks
+        <div className="bg-slate-900/90 border border-slate-800/90 rounded-lg p-2 shadow-sm hover:border-slate-700 transition-all flex items-center justify-between">
+          <div>
+            <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+              Delayed
+            </span>
+            <div className="flex items-baseline gap-1.5 mt-0.5">
+              <span className={`text-lg font-black font-mono tracking-tight ${delayed > 0 ? 'text-blue-400' : 'text-slate-400'}`}>
+                {delayed}
               </span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className={`text-2xl font-black font-mono tracking-tight ${delayed > 0 ? 'text-blue-400' : 'text-slate-400'}`}>
-                  {delayed}
-                </span>
-                <span className={`text-[10px] font-mono font-bold px-1.5 py-0.5 rounded border ${
-                  delayed > 0 
-                    ? 'bg-blue-950 text-blue-400 border-blue-800/80' 
-                    : 'bg-slate-950 text-slate-500 border-slate-800'
-                }`}>
-                  {delayed > 0 ? 'Waiting' : 'On Track'}
-                </span>
-              </div>
-            </div>
-            <div className={`w-8 h-8 rounded-lg border flex items-center justify-center shrink-0 ${
-              delayed > 0 
-                ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' 
-                : 'bg-slate-800/50 border-slate-800 text-slate-500'
-            }`}>
-              <AlertTriangle className="w-4 h-4" />
+              <span className={`text-[9px] font-mono px-1 py-0.2 rounded border ${
+                delayed > 0 
+                  ? 'bg-blue-950 text-blue-400 border-blue-800/80 font-bold' 
+                  : 'bg-slate-950 text-slate-500 border-slate-800'
+              }`}>
+                {delayed > 0 ? 'Waiting' : 'On Track'}
+              </span>
             </div>
           </div>
-          <div className="mt-2.5 pt-2 border-t border-slate-800/80 flex items-center justify-between text-[10px] font-mono text-slate-400">
-            <span>Blocked / Delayed</span>
-            <span className={delayed > 0 ? 'text-blue-400 font-bold' : 'text-slate-500'}>
-              {delayed > 0 ? 'Needs Attention' : '0 Bottlenecks'}
-            </span>
+          <div className={`w-6 h-6 rounded border flex items-center justify-center shrink-0 ${
+            delayed > 0 
+              ? 'bg-blue-500/10 border-blue-500/20 text-blue-400' 
+              : 'bg-slate-800/50 border-slate-800 text-slate-500'
+          }`}>
+            <AlertTriangle className="w-3.5 h-3.5" />
           </div>
         </div>
 
         {/* KPI 5: Overall Progress */}
-        <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm hover:border-slate-700 transition-all col-span-2 sm:col-span-1 group">
-          <div className="flex items-start justify-between">
+        <div className="bg-slate-900/90 border border-slate-800/90 rounded-lg p-2 shadow-sm hover:border-slate-700 transition-all col-span-2 sm:col-span-1 flex flex-col justify-between">
+          <div className="flex items-center justify-between">
             <div>
-              <span className="text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
+              <span className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider block">
                 Overall Progress
               </span>
-              <div className="flex items-baseline gap-2 mt-1">
-                <span className="text-2xl font-black font-mono text-purple-400 tracking-tight">
-                  {overallProgress}%
-                </span>
-                <span className="text-[10px] font-mono font-bold text-purple-400 bg-purple-950/80 border border-purple-800/50 px-1.5 py-0.5 rounded">
-                  Average
-                </span>
-              </div>
             </div>
-            <div className="w-8 h-8 rounded-lg bg-purple-500/10 border border-purple-500/20 text-purple-400 flex items-center justify-center shrink-0">
-              <TrendingUp className="w-4 h-4" />
+            <div className="flex items-baseline gap-1">
+              <span className="text-lg font-black font-mono text-purple-400 tracking-tight">
+                {overallProgress}%
+              </span>
             </div>
           </div>
 
           {/* Combined Progress Bar */}
-          <div className="mt-2.5 space-y-1">
-            <div className="w-full bg-slate-950 rounded-full h-2 overflow-hidden flex border border-slate-800">
-              <div
-                className="bg-emerald-500 h-full transition-all duration-500"
-                style={{ width: `${(completed / total) * 100}%` }}
-                title={`Completed: ${completed}`}
-              />
-              <div
-                className="bg-yellow-400 h-full transition-all duration-500"
-                style={{ width: `${(inProgress / total) * 100}%` }}
-                title={`In Progress: ${inProgress}`}
-              />
-              <div
-                className="bg-blue-500 h-full transition-all duration-500"
-                style={{ width: `${(delayed / total) * 100}%` }}
-                title={`Delayed: ${delayed}`}
-              />
-              <div
-                className="bg-red-500/40 h-full transition-all duration-500"
-                style={{ width: `${(notStarted / total) * 100}%` }}
-                title={`Not Started: ${notStarted}`}
-              />
-            </div>
+          <div className="w-full bg-slate-950 rounded-full h-1.5 overflow-hidden flex border border-slate-800 mt-1">
+            <div
+              className="bg-emerald-500 h-full transition-all duration-500"
+              style={{ width: `${(completed / total) * 100}%` }}
+              title={`Completed: ${completed}`}
+            />
+            <div
+              className="bg-yellow-400 h-full transition-all duration-500"
+              style={{ width: `${(inProgress / total) * 100}%` }}
+              title={`In Progress: ${inProgress}`}
+            />
+            <div
+              className="bg-blue-500 h-full transition-all duration-500"
+              style={{ width: `${(delayed / total) * 100}%` }}
+              title={`Delayed: ${delayed}`}
+            />
+            <div
+              className="bg-red-500/40 h-full transition-all duration-500"
+              style={{ width: `${(notStarted / total) * 100}%` }}
+              title={`Not Started: ${notStarted}`}
+            />
           </div>
         </div>
       </div>
 
-      {/* KPI 6: Discipline Breakdown */}
-      <div className="bg-slate-900 border border-slate-800 rounded-xl p-3.5 shadow-sm">
-        <div className="flex items-center justify-between mb-2.5">
-          <div className="flex items-center gap-2">
-            <Wrench className="w-4 h-4 text-amber-400" />
-            <h3 className="text-xs font-mono font-bold text-slate-200 uppercase tracking-wider">
-              Discipline Breakdown
-            </h3>
-            <span className="text-[10px] font-mono text-slate-400 bg-slate-950 border border-slate-800 px-2 py-0.5 rounded">
-              {disciplineBreakdown.length} Active Trades
-            </span>
-          </div>
-          <span className="text-[10px] font-mono text-slate-500">
-            Real-time Database Sync
+      {/* KPI 6: Discipline Breakdown - Compact Horizontal Summary */}
+      <div className="bg-slate-900/80 border border-slate-800/80 rounded-lg px-2.5 py-1.5 shadow-sm flex items-center gap-3">
+        <div className="flex items-center gap-1.5 shrink-0 border-r border-slate-800 pr-2.5">
+          <Wrench className="w-3 h-3 text-amber-400" />
+          <span className="text-[10px] font-mono font-bold text-slate-300 uppercase tracking-wider whitespace-nowrap">
+            Trades ({disciplineBreakdown.length})
           </span>
         </div>
 
-        {/* Responsive Grid of Discipline Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-2">
+        {/* Compact Horizontal Scrollable Summary Row */}
+        <div className="flex items-center gap-2 overflow-x-auto py-0.5 custom-scrollbar flex-1">
           {disciplineBreakdown.map((item) => (
             <div
               key={item.discipline}
               onClick={() => onSelectDiscipline?.(item.discipline)}
-              className={`bg-slate-950 border border-slate-800/90 hover:border-amber-400/50 p-2.5 rounded-lg transition-all ${
-                onSelectDiscipline ? 'cursor-pointer hover:bg-slate-900/80' : ''
+              className={`bg-slate-950 border border-slate-800/90 hover:border-amber-400/50 px-2 py-1 rounded-md transition-all flex items-center gap-2 shrink-0 ${
+                onSelectDiscipline ? 'cursor-pointer hover:bg-slate-900' : ''
               }`}
             >
-              <div className="flex items-center justify-between text-xs font-semibold mb-1">
-                <span className="text-slate-300 truncate font-mono text-[11px] font-bold" title={item.discipline}>
-                  {item.discipline}
-                </span>
-                <span className="text-[10px] font-mono font-bold text-amber-400">
-                  {item.avgProg}%
-                </span>
-              </div>
+              <span className="text-slate-300 text-[10px] font-mono font-bold whitespace-nowrap" title={item.discipline}>
+                {item.discipline}
+              </span>
 
-              {/* Progress Bar for this discipline */}
-              <div className="w-full bg-slate-900 rounded-full h-1.5 overflow-hidden flex border border-slate-800 mb-1.5">
+              {/* Slim progress bar for trade */}
+              <div className="w-10 bg-slate-900 rounded-full h-1 overflow-hidden flex border border-slate-800 shrink-0">
                 <div
                   className="bg-emerald-500 h-full transition-all duration-300"
                   style={{ width: `${(item.completed / item.total) * 100}%` }}
@@ -277,11 +230,13 @@ export const KPICards: React.FC<KPICardsProps> = ({ tasks, onSelectDiscipline })
                 />
               </div>
 
-              {/* Counts Breakdown */}
-              <div className="flex items-center justify-between text-[10px] font-mono text-slate-400">
-                <span className="text-emerald-400 font-bold">{item.completed}/{item.total} Done</span>
-                <span className="text-slate-500">{item.total - item.completed} Left</span>
-              </div>
+              <span className="text-[9px] font-mono font-bold text-amber-400 whitespace-nowrap">
+                {item.avgProg}%
+              </span>
+
+              <span className="text-[9px] font-mono text-slate-400 whitespace-nowrap">
+                ({item.completed}/{item.total})
+              </span>
             </div>
           ))}
         </div>

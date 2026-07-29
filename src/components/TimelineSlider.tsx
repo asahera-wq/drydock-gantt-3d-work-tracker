@@ -48,7 +48,6 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
     return baseDate.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric',
-      year: 'numeric',
     });
   };
 
@@ -112,73 +111,58 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
   const overallProg = totalTasks > 0 ? Math.round(totalProgSum / totalTasks) : 0;
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-xl p-4 shadow-lg space-y-3 font-sans relative overflow-hidden">
-      {/* Decorative ambient gradient backdrop */}
-      <div className="absolute -top-10 -right-10 w-40 h-40 bg-amber-500/10 blur-3xl pointer-events-none rounded-full" />
-      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/10 blur-3xl pointer-events-none rounded-full" />
-
-      {/* Top Controls Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
-        {/* Title & Timeline Status Badge */}
-        <div className="flex items-center gap-3">
-          <div className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+    <div className="bg-slate-900 border border-slate-800 rounded-lg px-2.5 py-1.5 shadow-md font-sans relative overflow-hidden flex flex-col justify-between gap-1 max-h-[85px]">
+      {/* Top Controls Header & Live Status Metrics Row */}
+      <div className="flex items-center justify-between gap-2 relative z-10 text-xs">
+        {/* Title, Date & Phase Indicator */}
+        <div className="flex items-center gap-2 shrink-0">
+          <div className={`w-6 h-6 rounded-md flex items-center justify-center transition-all ${
             isTimelineMode 
-              ? 'bg-amber-400 text-slate-950 shadow-md shadow-amber-500/20 font-bold' 
+              ? 'bg-amber-400 text-slate-950 shadow-sm font-bold' 
               : 'bg-slate-800 text-slate-400 border border-slate-700'
           }`}>
-            <Clock className={`w-5 h-5 ${isPlaying ? 'animate-spin' : ''}`} />
+            <Clock className={`w-3.5 h-3.5 ${isPlaying ? 'animate-spin' : ''}`} />
           </div>
 
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="text-sm font-bold text-slate-100 flex items-center gap-2">
-                Project Drydock Timeline Simulator
-              </h3>
-              {isTimelineMode && (
-                <span className="inline-flex items-center gap-1 text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-amber-400/20 text-amber-400 border border-amber-400/40 animate-pulse">
-                  <Activity className="w-3 h-3" /> LIVE SIMULATION
-                </span>
-              )}
-            </div>
-            <p className="text-[11px] text-slate-400 font-mono">
-              Date: <strong className="text-amber-400">{getDateForDay(currentDay)}</strong>
-              <span className="text-slate-600 px-1">|</span>
-              Day <strong className="text-slate-200">{currentDay}</strong> of {totalDays}
-              <span className="text-slate-600 px-1">|</span>
-              <span className="text-cyan-400">{activePhase.name}</span>
-            </p>
+          <div className="flex items-center gap-1.5 font-mono text-[11px]">
+            <span className="font-bold text-slate-200 hidden md:inline">Timeline:</span>
+            <span className="text-amber-400 font-bold">{getDateForDay(currentDay)}</span>
+            <span className="text-slate-600">|</span>
+            <span className="text-slate-300 font-semibold">Day {currentDay}/{totalDays}</span>
+            <span className="text-slate-600 hidden sm:inline">|</span>
+            <span className="text-cyan-400 hidden sm:inline truncate max-w-[100px]">{activePhase.name.split(':')[1] || activePhase.name}</span>
           </div>
         </div>
 
         {/* Playback Controls & Speed Options */}
-        <div className="flex items-center gap-2 self-start sm:self-auto flex-wrap">
+        <div className="flex items-center gap-1.5 shrink-0">
           {/* Step Back */}
           <button
             onClick={handleStepBack}
-            className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-xs"
+            className="p-1 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-xs"
             title="Step Back 1 Day"
           >
-            <SkipBack className="w-4 h-4" />
+            <SkipBack className="w-3 h-3" />
           </button>
 
           {/* Play / Pause Toggle */}
           <button
             onClick={handleTogglePlay}
-            className={`flex items-center gap-2 px-4 py-2 rounded-lg font-bold text-xs transition-all shadow-md ${
+            className={`flex items-center gap-1 px-2.5 py-1 rounded font-bold text-[11px] transition-all shadow-sm ${
               isPlaying
-                ? 'bg-rose-500 text-white hover:bg-rose-600 shadow-rose-500/20'
-                : 'bg-amber-400 text-slate-950 hover:bg-amber-300 shadow-amber-500/20'
+                ? 'bg-rose-500 text-white hover:bg-rose-600'
+                : 'bg-amber-400 text-slate-950 hover:bg-amber-300'
             }`}
           >
             {isPlaying ? (
               <>
-                <Pause className="w-4 h-4 fill-current" />
+                <Pause className="w-3 h-3 fill-current" />
                 <span>PAUSE</span>
               </>
             ) : (
               <>
-                <Play className="w-4 h-4 fill-current" />
-                <span>ANIMATE TIMELINE</span>
+                <Play className="w-3 h-3 fill-current" />
+                <span>ANIMATE</span>
               </>
             )}
           </button>
@@ -186,20 +170,20 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
           {/* Step Forward */}
           <button
             onClick={handleStepForward}
-            className="p-2 rounded-lg bg-slate-950 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-xs"
+            className="p-1 rounded bg-slate-950 border border-slate-800 text-slate-300 hover:bg-slate-800 hover:text-white transition-all text-xs"
             title="Step Forward 1 Day"
           >
-            <SkipForward className="w-4 h-4" />
+            <SkipForward className="w-3 h-3" />
           </button>
 
           {/* Playback Speed Selector */}
-          <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 p-1 rounded-lg text-xs font-mono">
-            <Gauge className="w-3.5 h-3.5 text-slate-500 ml-1" />
+          <div className="hidden lg:flex items-center gap-0.5 bg-slate-950 border border-slate-800 p-0.5 rounded text-[10px] font-mono">
+            <Gauge className="w-3 h-3 text-slate-500 ml-0.5" />
             {[0.5, 1, 2, 5].map((spd) => (
               <button
                 key={spd}
                 onClick={() => setSpeed(spd)}
-                className={`px-1.5 py-0.5 rounded text-[10px] font-bold transition-all ${
+                className={`px-1 py-0.2 rounded font-bold transition-all ${
                   speed === spd
                     ? 'bg-amber-400 text-slate-950'
                     : 'text-slate-400 hover:text-slate-200'
@@ -210,14 +194,22 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
             ))}
           </div>
 
+          {/* Live Counts Summary Badges */}
+          <div className="hidden xl:flex items-center gap-2 font-mono text-[10px] bg-slate-950 border border-slate-800/80 px-2 py-0.5 rounded">
+            <span className="text-emerald-400 font-bold">{currentCompleted} Done</span>
+            <span className="text-yellow-400 font-bold">{currentInProgress} Active</span>
+            <span className="text-blue-400 font-bold">{currentDelayed} Wait</span>
+            <span className="text-purple-400 font-bold">{overallProg}%</span>
+          </div>
+
           {/* Reset Button */}
           {isTimelineMode && (
             <button
               onClick={handleReset}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-amber-400 hover:bg-slate-800 text-xs font-mono font-bold transition-all ml-1"
-              title="Reset to Database Default View"
+              className="flex items-center gap-1 px-2 py-0.5 rounded bg-slate-950 border border-slate-800 text-amber-400 hover:bg-slate-800 text-[10px] font-mono font-bold transition-all"
+              title="Reset to Database View"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
+              <RotateCcw className="w-3 h-3" />
               <span>Reset</span>
             </button>
           )}
@@ -225,10 +217,10 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
       </div>
 
       {/* Timeline Scrubbing Bar & Phase Visual Ribbon */}
-      <div className="space-y-1.5 relative z-10 pt-1">
+      <div className="space-y-0.5 relative z-10">
         {/* Phase Track Segment Ribbons */}
         <div 
-          className="gap-0.5 h-2 rounded-md overflow-hidden bg-slate-950 border border-slate-800/80 p-0.5"
+          className="gap-0.5 h-1.5 rounded overflow-hidden bg-slate-950 border border-slate-800/80 p-0.5"
           style={{ display: 'grid', gridTemplateColumns: `repeat(${totalDays}, minmax(0, 1fr))` }}
         >
           {Array.from({ length: totalDays }, (_, i) => i + 1).map((day) => {
@@ -243,7 +235,7 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
                 }}
                 className={`h-full cursor-pointer transition-all ${
                   isCurrent
-                    ? 'bg-amber-400 shadow-md shadow-amber-400/50 scale-y-125 z-10'
+                    ? 'bg-amber-400 shadow-sm shadow-amber-400/50 scale-y-125 z-10'
                     : isPast
                     ? 'bg-emerald-500/70 hover:bg-emerald-400'
                     : 'bg-slate-800 hover:bg-slate-700'
@@ -254,23 +246,8 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
           })}
         </div>
 
-        {/* Range Slider Control */}
-        <div className="relative flex items-center">
-          <input
-            type="range"
-            min={1}
-            max={totalDays}
-            value={currentDay}
-            onChange={(e) => {
-              if (!isTimelineMode) onToggleTimelineMode(true);
-              onDayChange(Number(e.target.value));
-            }}
-            className="w-full h-2.5 bg-slate-950 rounded-lg appearance-none cursor-pointer accent-amber-400 focus:outline-none border border-slate-800"
-          />
-        </div>
-
         {/* Phase Milestones Labels Row */}
-        <div className="flex items-center justify-between text-[10px] font-mono text-slate-400 pt-0.5">
+        <div className="flex items-center justify-between text-[9px] font-mono text-slate-400 pt-0.5">
           {phases.map((ph) => {
             const isPhaseActive = currentDay >= ph.startDay && currentDay <= ph.endDay;
             return (
@@ -280,7 +257,7 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
                   if (!isTimelineMode) onToggleTimelineMode(true);
                   onDayChange(ph.startDay);
                 }}
-                className={`truncate max-w-[120px] text-left transition-colors font-semibold ${
+                className={`truncate max-w-[100px] text-left transition-colors font-semibold ${
                   isPhaseActive
                     ? 'text-amber-400 font-bold underline underline-offset-2'
                     : 'text-slate-400 hover:text-slate-200'
@@ -291,38 +268,6 @@ export const TimelineSlider: React.FC<TimelineSliderProps> = ({
               </button>
             );
           })}
-        </div>
-      </div>
-
-      {/* Real-Time Live Status Metrics Banner */}
-      <div className="bg-slate-950 border border-slate-800/90 rounded-lg p-2.5 flex flex-wrap items-center justify-between gap-3 text-xs font-mono relative z-10">
-        <div className="flex items-center gap-4 flex-wrap">
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block animate-pulse" />
-            <span className="text-slate-400">Completed:</span>
-            <strong className="text-emerald-400 font-bold">{currentCompleted}</strong>
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-yellow-400 inline-block animate-pulse" />
-            <span className="text-slate-400">In Progress:</span>
-            <strong className="text-yellow-400 font-bold">{currentInProgress}</strong>
-          </div>
-
-          <div className="flex items-center gap-1.5">
-            <span className="w-2.5 h-2.5 rounded-full bg-blue-500 inline-block" />
-            <span className="text-slate-400">Waiting/Delayed:</span>
-            <strong className="text-blue-400 font-bold">{currentDelayed}</strong>
-          </div>
-        </div>
-
-        {/* Overall Completion Percentage Badge */}
-        <div className="flex items-center gap-2">
-          <span className="text-slate-400">Drydock Completion:</span>
-          <div className="flex items-center gap-1.5 bg-slate-900 border border-slate-800 px-2.5 py-1 rounded-md">
-            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-            <strong className="text-amber-400 font-bold text-sm">{overallProg}%</strong>
-          </div>
         </div>
       </div>
     </div>
