@@ -21,7 +21,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   const daysElapsedPct = Math.round((activeBay.currentDay / activeBay.totalDays) * 100);
 
   return (
-    <header className="bg-slate-900 border-b border-slate-800 text-slate-100 px-3 py-1.5 shadow-md flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2">
+    <header className="bg-slate-900 border-b border-slate-800 text-slate-100 px-2 py-1 shadow-md flex flex-col lg:flex-row items-stretch lg:items-center justify-between gap-2 shrink-0">
       {/* Brand & Bay Switcher */}
       <div className="flex items-center gap-3">
         <div className="flex items-center gap-2">

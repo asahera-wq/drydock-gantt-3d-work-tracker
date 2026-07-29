@@ -119,9 +119,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
     filters.criticalPathOnly;
 
   return (
-    <div className="bg-slate-900 border border-slate-800 rounded-lg p-2 shadow-sm space-y-1.5 font-sans text-xs">
+    <div className="bg-slate-900 border border-slate-800 rounded px-2 py-1 shadow-sm space-y-1 font-sans text-xs">
       {/* Top Search & 3D Viewport Controls */}
-      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-2">
+      <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-1.5">
         {/* Keyword Search Bar */}
         <div className="relative flex-1">
           <Search className="w-3.5 h-3.5 text-slate-400 absolute left-2.5 top-1/2 -translate-y-1/2" />
@@ -130,7 +130,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
             placeholder="Search tasks by WO code, title, contractor, discipline, work package..."
             value={filters.searchQuery}
             onChange={(e) => onFilterChange({ ...filters, searchQuery: e.target.value })}
-            className="w-full bg-slate-950 border border-slate-700 focus:border-amber-400 rounded pl-8 pr-7 py-1 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30 font-medium"
+            className="w-full h-6 bg-slate-950 border border-slate-700 focus:border-amber-400 rounded pl-8 pr-7 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-500/30 font-medium"
           />
           {filters.searchQuery && (
             <button
@@ -143,13 +143,13 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         </div>
 
         {/* 3D Viewport Shader Mode Buttons */}
-        <div className="flex items-center gap-1 bg-slate-950 border border-slate-800 p-0.5 rounded self-start md:self-auto shrink-0">
-          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider px-1.5 hidden lg:inline font-mono">
+        <div className="flex items-center gap-0.5 bg-slate-950 border border-slate-800 p-0.5 rounded self-start md:self-auto shrink-0 h-6">
+          <span className="text-[9px] font-bold text-slate-500 uppercase tracking-wider px-1 hidden lg:inline font-mono">
             3D Mode:
           </span>
           <button
             onClick={() => onViewportModeChange('shaded')}
-            className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-semibold transition-all ${
+            className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold transition-all ${
               viewportMode === 'shaded'
                 ? 'bg-amber-400 text-slate-950 shadow-sm font-bold'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -162,7 +162,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
           <button
             onClick={() => onViewportModeChange('wireframe')}
-            className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-semibold transition-all ${
+            className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold transition-all ${
               viewportMode === 'wireframe'
                 ? 'bg-cyan-500 text-slate-950 shadow-sm font-bold'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -175,7 +175,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
           <button
             onClick={() => onViewportModeChange('heatmap')}
-            className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-semibold transition-all ${
+            className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold transition-all ${
               viewportMode === 'heatmap'
                 ? 'bg-rose-500 text-white shadow-sm font-bold'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -188,7 +188,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
           <button
             onClick={() => onViewportModeChange('safety')}
-            className={`flex items-center gap-1 px-2 py-1 rounded text-[11px] font-semibold transition-all ${
+            className={`flex items-center gap-1 px-1.5 py-0.5 rounded text-[10px] font-semibold transition-all ${
               viewportMode === 'safety'
                 ? 'bg-orange-500 text-slate-950 shadow-sm font-bold'
                 : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800'
@@ -202,10 +202,10 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
       </div>
 
       {/* Primary Filtering Grid (Discipline, Work Package, Status, Ship Part, Ship Zone) */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-2 pt-1 border-t border-slate-800/80">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-1.5 pt-0.5 border-t border-slate-800/80">
         {/* 1. Discipline Filter */}
         <div className="space-y-0.5">
-          <label className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+          <label className="text-[10px] font-mono font-medium text-slate-400 uppercase tracking-wider flex items-center gap-1">
             <SlidersHorizontal className="w-2.5 h-2.5 text-amber-400" /> Discipline
           </label>
           <select
@@ -218,7 +218,7 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
                 trade: val as any 
               });
             }}
-            className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
+            className="w-full h-6 bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-1.5 py-0 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
           >
             {tradeOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -230,13 +230,13 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
         {/* 2. Work Package Filter */}
         <div className="space-y-0.5">
-          <label className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+          <label className="text-[10px] font-mono font-medium text-slate-400 uppercase tracking-wider flex items-center gap-1">
             <Briefcase className="w-2.5 h-2.5 text-amber-400" /> Work Package
           </label>
           <select
             value={filters.workPackage}
             onChange={(e) => onFilterChange({ ...filters, workPackage: e.target.value })}
-            className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
+            className="w-full h-6 bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-1.5 py-0 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
           >
             {workPackageOptions.map((wp) => (
               <option key={wp.value} value={wp.value}>
@@ -248,13 +248,13 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
         {/* 3. Task Status Filter */}
         <div className="space-y-0.5">
-          <label className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+          <label className="text-[10px] font-mono font-medium text-slate-400 uppercase tracking-wider flex items-center gap-1">
             <Clock className="w-2.5 h-2.5 text-amber-400" /> Task Status
           </label>
           <select
             value={filters.status}
             onChange={(e) => onFilterChange({ ...filters, status: e.target.value as any })}
-            className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
+            className="w-full h-6 bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-1.5 py-0 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
           >
             {statusOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -266,13 +266,13 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
 
         {/* 4. Ship Component Filter */}
         <div className="space-y-0.5">
-          <label className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+          <label className="text-[10px] font-mono font-medium text-slate-400 uppercase tracking-wider flex items-center gap-1">
             <MapPin className="w-2.5 h-2.5 text-amber-400" /> Component
           </label>
           <select
             value={filters.shipPart}
             onChange={(e) => onFilterChange({ ...filters, shipPart: e.target.value as any })}
-            className="w-full bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-2 py-1 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
+            className="w-full h-6 bg-slate-950 border border-slate-800 hover:border-slate-700 text-slate-200 rounded px-1.5 py-0 text-xs focus:outline-none focus:ring-1 focus:ring-amber-400 cursor-pointer font-medium"
           >
             {shipPartOptions.map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -283,9 +283,9 @@ export const FilterSection: React.FC<FilterSectionProps> = ({
         </div>
 
         {/* 5. Vessel Zone Location Filter */}
-        <div className="space-y-0.5 col-span-2 sm:col-span-1">
-          <label className="text-[9px] font-mono font-bold text-slate-400 uppercase tracking-wider flex items-center gap-1">
-            <Compass className="w-2.5 h-2.5 text-amber-400" /> Zone
+        <div className="space-y-1 col-span-2 sm:col-span-1">
+          <label className="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-1">
+            <Compass className="w-3 h-3 text-amber-400" /> Zone
           </label>
           <select
             value={filters.zone}

@@ -315,19 +315,28 @@ export const ThreeViewport: React.FC<ThreeViewportProps> = ({
     animate();
 
     // Container Resize Observer
+    let resizeAnimationFrameId: number | null = null;
     const resizeObserver = new ResizeObserver(() => {
-      if (!mountRef.current || !rendererRef.current || !cameraRef.current) return;
-      const w = mountRef.current.clientWidth;
-      const h = mountRef.current.clientHeight;
-      if (w === 0 || h === 0) return;
-      cameraRef.current.aspect = w / h;
-      cameraRef.current.updateProjectionMatrix();
-      rendererRef.current.setSize(w, h);
+      if (resizeAnimationFrameId !== null) {
+        cancelAnimationFrame(resizeAnimationFrameId);
+      }
+      resizeAnimationFrameId = requestAnimationFrame(() => {
+        if (!mountRef.current || !rendererRef.current || !cameraRef.current) return;
+        const w = mountRef.current.clientWidth;
+        const h = mountRef.current.clientHeight;
+        if (w === 0 || h === 0) return;
+        cameraRef.current.aspect = w / h;
+        cameraRef.current.updateProjectionMatrix();
+        rendererRef.current.setSize(w, h, false);
+      });
     });
 
     resizeObserver.observe(container);
 
     return () => {
+      if (resizeAnimationFrameId !== null) {
+        cancelAnimationFrame(resizeAnimationFrameId);
+      }
       resizeObserver.disconnect();
       if (animFrameIdRef.current) cancelAnimationFrame(animFrameIdRef.current);
       if (sceneRef.current) {
