@@ -193,8 +193,37 @@ export default function App() {
         }}
       />
 
+      {/* Fixed Header Controls Region (KPI Cards, Timeline Slider, Filter Toolbar) */}
+      <div className="bg-slate-950 border-b border-slate-800/80 px-4 py-2 space-y-2 shrink-0 z-20 shadow-md">
+        {/* Top KPI Cards Row */}
+        <KPICards 
+          tasks={displayedTasks} 
+          onSelectDiscipline={(disc) => setFilters((prev) => ({ ...prev, discipline: disc, trade: disc as any }))}
+        />
+
+        {/* Interactive Timeline Simulation & Date Slider */}
+        <TimelineSlider
+          currentDay={simulatedDay}
+          totalDays={activeBay.totalDays || 28}
+          onDayChange={setSimulatedDay}
+          phases={phases}
+          tasks={displayedTasks}
+          isTimelineMode={isTimelineMode}
+          onToggleTimelineMode={setIsTimelineMode}
+        />
+
+        {/* Filter & View Mode Controls Section */}
+        <FilterSection
+          filters={filters}
+          onFilterChange={setFilters}
+          viewportMode={viewportMode}
+          onViewportModeChange={setViewportMode}
+          totalResults={filteredTasks.length}
+        />
+      </div>
+
       {/* Main Workspace Body */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex min-h-0 overflow-hidden">
         {/* Left Sidebar */}
         <Sidebar
           activeTab={activeTab}
@@ -203,85 +232,57 @@ export default function App() {
           tasks={displayedTasks}
         />
 
-        {/* Content Viewport Area */}
-        <main className="flex-1 overflow-y-auto p-4 space-y-4 bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
-          {/* Top KPI Cards Row */}
-          <KPICards 
-            tasks={displayedTasks} 
-            onSelectDiscipline={(disc) => setFilters((prev) => ({ ...prev, discipline: disc, trade: disc as any }))}
-          />
-
-          {/* Interactive Timeline Simulation & Date Slider */}
-          <TimelineSlider
-            currentDay={simulatedDay}
-            totalDays={activeBay.totalDays || 28}
-            onDayChange={setSimulatedDay}
-            phases={phases}
-            tasks={displayedTasks}
-            isTimelineMode={isTimelineMode}
-            onToggleTimelineMode={setIsTimelineMode}
-          />
-
-          {/* Filter & View Mode Controls Section */}
-          <FilterSection
-            filters={filters}
-            onFilterChange={setFilters}
-            viewportMode={viewportMode}
-            onViewportModeChange={setViewportMode}
-            totalResults={filteredTasks.length}
-          />
-
-          {/* Core Dashboard Workspace Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
-            {/* Large 3D Viewport Column */}
-            <div className="lg:col-span-7 xl:col-span-8">
-              <ThreeViewport
-                selectedComponentId={selectedComponentId}
-                onSelectComponent={handleSelectComponent}
-                tasks={filteredTasks}
-                selectedTaskId={selectedTaskId}
-                onSelectTask={handleSelectTask}
-                onUpdateTask={handleUpdateTask}
-                viewportMode={viewportMode}
-                onViewportModeChange={setViewportMode}
-                lightingPreset={lightingPreset}
-                onLightingPresetChange={setLightingPreset}
-                explodeFactor={explodeFactor}
-                onExplodeFactorChange={setExplodeFactor}
-                resetTrigger={resetTrigger}
-              />
-            </div>
-
-            {/* Gantt Timeline & Summary Column */}
-            <div className="lg:col-span-5 xl:col-span-4 flex flex-col gap-4">
-              <GanttChart
-                phases={phases}
-                tasks={filteredTasks}
-                selectedTaskId={selectedTaskId}
-                onSelectTask={handleSelectTask}
-                currentDay={isTimelineMode ? simulatedDay : activeBay.currentDay}
-                totalDays={activeBay.totalDays}
-              />
-            </div>
+        {/* Main Two-Column CSS Grid Workspace: 38% Left (Fixed 3D Viewport), 62% Right (Scrollable Gantt & Audit) */}
+        <main className="flex-1 min-h-0 grid grid-cols-1 lg:grid-cols-[38%_62%] w-full h-full overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950">
+          {/* LEFT PANEL (38% width): Fixed Three.js Viewport */}
+          <div className="h-full w-full overflow-hidden flex flex-col min-h-0 relative p-3 border-r border-slate-800/80 bg-slate-950/80">
+            <ThreeViewport
+              selectedComponentId={selectedComponentId}
+              onSelectComponent={handleSelectComponent}
+              tasks={filteredTasks}
+              selectedTaskId={selectedTaskId}
+              onSelectTask={handleSelectTask}
+              onUpdateTask={handleUpdateTask}
+              viewportMode={viewportMode}
+              onViewportModeChange={setViewportMode}
+              lightingPreset={lightingPreset}
+              onLightingPresetChange={setLightingPreset}
+              explodeFactor={explodeFactor}
+              onExplodeFactorChange={setExplodeFactor}
+              resetTrigger={resetTrigger}
+            />
           </div>
 
-          {/* 14 Major Component Mesh Breakdown & Inspector Panel */}
-          <ComponentInspectorPanel
-            selectedComponentId={selectedComponentId}
-            onSelectComponent={handleSelectComponent}
-            explodeFactor={explodeFactor}
-            onExplodeFactorChange={setExplodeFactor}
-            tasks={displayedTasks}
-          />
+          {/* RIGHT PANEL (62% width): Vertically & Horizontally Scrollable Gantt & Audit Panel */}
+          <div className="h-full w-full overflow-y-auto overflow-x-auto p-3 space-y-4 custom-scrollbar">
+            {/* Gantt Schedule Matrix */}
+            <GanttChart
+              phases={phases}
+              tasks={filteredTasks}
+              selectedTaskId={selectedTaskId}
+              onSelectTask={handleSelectTask}
+              currentDay={isTimelineMode ? simulatedDay : activeBay.currentDay}
+              totalDays={activeBay.totalDays}
+            />
 
-          {/* Bottom Task Audit Table */}
-          <TaskList
-            tasks={filteredTasks}
-            selectedTaskId={selectedTaskId}
-            onSelectTask={handleSelectTask}
-            onOpenTaskDetails={setInspectTask}
-            onUpdateTask={handleUpdateTask}
-          />
+            {/* 14 Major Component Mesh Breakdown & Inspector Panel */}
+            <ComponentInspectorPanel
+              selectedComponentId={selectedComponentId}
+              onSelectComponent={handleSelectComponent}
+              explodeFactor={explodeFactor}
+              onExplodeFactorChange={setExplodeFactor}
+              tasks={displayedTasks}
+            />
+
+            {/* Bottom Task Audit Table */}
+            <TaskList
+              tasks={filteredTasks}
+              selectedTaskId={selectedTaskId}
+              onSelectTask={handleSelectTask}
+              onOpenTaskDetails={setInspectTask}
+              onUpdateTask={handleUpdateTask}
+            />
+          </div>
         </main>
       </div>
 

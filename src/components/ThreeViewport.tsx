@@ -668,7 +668,7 @@ export const ThreeViewport: React.FC<ThreeViewportProps> = ({
   const selectedTask = tasks.find((t) => t.id === selectedTaskId);
 
   return (
-    <div id="three-viewport-container" className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl flex flex-col relative h-[540px]">
+    <div id="three-viewport-container" className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden shadow-2xl flex flex-col relative h-full w-full flex-1 min-h-[400px]">
       {/* HUD Header Bar */}
       <div id="three-hud-header" className="bg-slate-950/90 backdrop-blur-md border-b border-slate-800 px-3 py-2 flex flex-wrap items-center justify-between text-xs z-10 gap-2">
         <div className="flex items-center gap-2">
