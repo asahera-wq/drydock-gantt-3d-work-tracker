@@ -1,0 +1,6 @@
+{
+  "name": "3D Low-Poly Cargo Vessel Inspector",
+  "description": "Interactive 3D low-poly cargo ship inspector built with Three.js primitive geometries, individual component mesh breakdowns, exploded view mode, OrbitControls, and professional lighting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
