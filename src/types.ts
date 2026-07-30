@@ -85,6 +85,8 @@ export interface Task {
   shipPart?: VesselComponentId;
   cameraPosition?: [number, number, number];
   targetPosition?: [number, number, number];
+  remarks?: string;
+  photos?: string[];
 }
 
 export interface GanttPhase {

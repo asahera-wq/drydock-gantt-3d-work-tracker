@@ -13,7 +13,11 @@ import {
   HardHat, 
   FileText,
   Save,
-  Box
+  Box,
+  Camera,
+  MessageSquare,
+  Upload,
+  Image as ImageIcon
 } from 'lucide-react';
 
 interface TaskDetailModalProps {
@@ -35,6 +39,21 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
   const [status, setStatus] = useState<any>(task.status === 'waiting' ? 'delayed' : task.status);
   const [manhoursSpent, setManhoursSpent] = useState(task.manhoursSpent);
   const [permitApproved, setPermitApproved] = useState(task.permitApproved ?? true);
+  const [remarks, setRemarks] = useState(task.remarks || '');
+  const [photos, setPhotos] = useState<string[]>(task.photos || []);
+
+  const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+    const file = files[0];
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      if (event.target?.result) {
+        setPhotos((prev) => [...prev, event.target!.result as string]);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleSave = () => {
     let finalProgress = progress;
@@ -47,6 +66,8 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
       manhoursSpent,
       permitApproved,
       status,
+      remarks,
+      photos,
     });
     onClose();
   };
@@ -233,13 +254,68 @@ export const TaskDetailModal: React.FC<TaskDetailModalProps> = ({
               max="100"
               value={progress}
               onChange={(e) => setProgress(Number(e.target.value))}
-              className="w-full accent-amber-400 cursor-pointer h-2 bg-slate-900 rounded-lg"
+              className="w-full accent-amber-400 cursor-pointer h-2 bg-slate-900 rounded-lg min-h-[44px]"
             />
 
             <div className="flex justify-between text-[11px] text-slate-400 font-mono">
               <span>0% (Not Started)</span>
               <span>50% (Mid-Phase)</span>
               <span>100% (Completed & Certified)</span>
+            </div>
+          </div>
+
+          {/* Field Supervisor Remarks & Photos */}
+          <div className="space-y-3 bg-slate-950 border border-slate-800 p-4 rounded-xl">
+            <label className="font-bold text-xs text-slate-300 uppercase tracking-wider font-mono flex items-center gap-1.5">
+              <MessageSquare className="w-4 h-4 text-amber-400" />
+              Yard Supervisor Remarks & Notes
+            </label>
+            <textarea
+              rows={3}
+              value={remarks}
+              onChange={(e) => setRemarks(e.target.value)}
+              placeholder="Enter site observations, staging delay reasons, quality inspection notes..."
+              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 text-xs text-slate-200 placeholder-slate-500 focus:outline-none focus:ring-1 focus:ring-amber-400 font-sans"
+            />
+
+            {/* Inspection Photos */}
+            <div className="space-y-2 pt-1 border-t border-slate-800/80">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-mono font-semibold text-slate-400 flex items-center gap-1.5">
+                  <Camera className="w-4 h-4 text-cyan-400" />
+                  Site Inspection Photos ({photos.length})
+                </span>
+                <label className="cursor-pointer bg-slate-800 hover:bg-slate-700 text-slate-200 px-3 py-1.5 rounded-lg text-xs font-bold font-mono border border-slate-700 flex items-center gap-1.5 min-h-[44px] sm:min-h-0">
+                  <Upload className="w-3.5 h-3.5 text-amber-400" />
+                  Attach Photo
+                  <input
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoUpload}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+
+              {photos.length > 0 ? (
+                <div className="grid grid-cols-3 sm:grid-cols-4 gap-2">
+                  {photos.map((imgSrc, idx) => (
+                    <div key={idx} className="relative group aspect-video bg-slate-900 rounded border border-slate-800 overflow-hidden">
+                      <img src={imgSrc} alt={`Inspection ${idx + 1}`} className="w-full h-full object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setPhotos((prev) => prev.filter((_, i) => i !== idx))}
+                        className="absolute top-1 right-1 bg-slate-950/80 text-rose-400 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"
+                        title="Remove photo"
+                      >
+                        <X className="w-3 h-3" />
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-[11px] text-slate-500 italic">No inspection photos attached yet.</p>
+              )}
             </div>
           </div>
         </div>
